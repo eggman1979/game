@@ -1,0 +1,8 @@
+.error  {
+	-fx-text-box-border: red;
+	-fx-focus-color:red;
+}
+.text-input.normal	 {
+	-fx-text-box-border: #4bf847;
+		-fx-focus-color: #4bf847;
+}

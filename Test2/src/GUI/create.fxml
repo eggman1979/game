@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreateController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="400" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="0.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="57.0" text="Username">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="user" onKeyReleased="#userFieldHandler" prefWidth="157.0">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="57.0" text="E-mail   " />
+                  <TextField fx:id="email" onKeyReleased="#emailFieldHandler" prefWidth="157.0">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="109.0">
+               <children>
+                  <Label prefWidth="57.0" text="Password">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField fx:id="pass" onKeyReleased="#passFieldHandler" prefHeight="25.0" prefWidth="157.0">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></PasswordField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="345.0">
+               <children>
+                  <Label prefHeight="37.0" prefWidth="57.0" text="Confirm Password" underline="true" wrapText="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="confPass" onKeyReleased="#confirmFieldHandler" prefHeight="25.0" prefWidth="157.0">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="175.0">
+               <children>
+                  <Button fx:id="createBtn" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#createAccount" text="Create Account" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

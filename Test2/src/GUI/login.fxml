@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+   <top>
+      <VBox alignment="CENTER" prefHeight="400" prefWidth="600" BorderPane.alignment="CENTER">
+         <children>
+            <ProgressIndicator fx:id="progress" prefHeight="42.0" prefWidth="600.0" visible="false" />
+            <Label text="Super Duper Game">
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="info" />
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="241.0">
+               <children>
+                  <Label text="Username">
+                     <HBox.margin>
+                        <Insets right="4.0" />
+                     </HBox.margin></Label>
+                  <TextField fx:id="user" prefHeight="25.0" prefWidth="172.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="4.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="241.0">
+               <children>
+                  <Label text="Password">
+                     <HBox.margin>
+                        <Insets right="4.0" />
+                     </HBox.margin></Label>
+                  <PasswordField fx:id="pass" prefHeight="30.0" prefWidth="174.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="37.0" prefWidth="327.0">
+               <children>
+                  <Button fx:id="createBtn" mnemonicParsing="false" onAction="#loadCreateAccount" prefHeight="25.0" prefWidth="127.0" text="Create New Account">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="84.0" text="Log In">
+                     <HBox.margin>
+                        <Insets left="10.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="4.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
