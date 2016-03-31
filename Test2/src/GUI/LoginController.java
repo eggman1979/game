@@ -2,16 +2,19 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import ClientConnection.InClientConnection;
 import ClientConnection.OutConnectionClient;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
@@ -29,7 +32,8 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 	GuiMain gm = new GuiMain();
 
 	ScreenController myController;
-
+	Alert alert;
+	
 	ClientController cc;
 	boolean isStartedFlag = false;
 
@@ -50,7 +54,7 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 	@FXML
 	private Label info;
 
-	// Action når login bliver klikket
+	// Action nï¿½r login bliver klikket
 	@FXML
 	void login(ActionEvent event) throws IOException {
 		String login = user.getText()+"," +pass.getText();
@@ -69,17 +73,28 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 				Thread.sleep(1000);
 			GamePacket gp =	myController.cc.getLoginPacket();
 			AccountDTO acc = (AccountDTO)gp.getPayload();
-			System.out.println(gp.getToken().getTokenID());
+			System.out.println(acc);
 				
-				if(gp.getToken().getTokenID() != null){
+				if(!(null == acc)){
 					myController.setScreen("main");
 					System.out.println("main");
+					System.out.println("login Controller if");
 				}else {
-					info.setText("Wrong username or password");
-					System.out.println("jeg kommer i if else");
-					progress.setVisible(false);
+					Platform.runLater(new Runnable() {
+						
+						@Override
+						public void run() {
+							AlertBox.show("Error", "Error in user name or password");
+							progress.setVisible(false);
+							
+						}
+					});
+					System.out.println("login Controller else");
+					
+
+
 				}
-			
+				
 				return null;
 			}
 
@@ -89,7 +104,7 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 		};
 		new Thread(task).start();
 		
-
+	
 	}
 
 
@@ -104,7 +119,8 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
+		
 
 	}
 

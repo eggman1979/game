@@ -14,7 +14,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -60,6 +63,12 @@ public class CreateController implements Initializable, ControlledScreen {
 				Thread.sleep(500);
 				GamePacket gp = myController.cc.getCreateAccountPacket();
 				if(((AccountDTO)gp.getPayload()) instanceof AccountDTO){
+				}else{
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Username exists");
+					alert.setHeaderText(null);
+					alert.setContentText("User already exists");
+					alert.showAndWait();
 				}
 
 				return null;
