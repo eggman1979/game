@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
-   <top>
+   <center>
       <VBox alignment="CENTER" prefHeight="400" prefWidth="600" BorderPane.alignment="CENTER">
          <children>
             <ProgressIndicator fx:id="progress" prefHeight="42.0" prefWidth="600.0" visible="false" />
@@ -57,5 +57,17 @@
             </HBox>
          </children>
       </VBox>
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="Contacting Server :">
+               <HBox.margin>
+                  <Insets right="4.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="counter" alignment="CENTER" text="0" />
+         </children>
+      </HBox>
    </top>
 </BorderPane>

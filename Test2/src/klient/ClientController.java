@@ -57,7 +57,7 @@ public class ClientController implements Runnable
 	}
 
 
-	// Får besked fra In at der er en pakke der skal håndteres
+	// Fï¿½r besked fra In at der er en pakke der skal hï¿½ndteres
 	@Override
 	public void run() {
 		while(true){
@@ -107,6 +107,13 @@ public class ClientController implements Runnable
 			e.printStackTrace();
 		}
 		return createPacket;
+	}
+
+	public GamePacket initServerConnection() {
+		System.out.println("Sidder i initServerConnection()");
+		GamePacket initPacket = in.recieve();
+		
+		return initPacket;
 	}
 
 
