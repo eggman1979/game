@@ -6,22 +6,15 @@ package GUI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.mysql.jdbc.Field;
-
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import shared.AccountDTO;
 import shared.FieldVerifier;
 import shared.GamePacket;
@@ -49,6 +42,9 @@ public class CreateController implements Initializable, ControlledScreen {
 	private TextField email;
 
 	@FXML
+	private Button backToMainBtn;
+
+	@FXML
 	void createAccount(ActionEvent event) {
 		//TODO knappen skal ikke aktiveres f�r at alle felter er udfyldt korrekt
 		AccountDTO acc = new AccountDTO( user.getText(), email.getText(), pass.getText());
@@ -56,21 +52,17 @@ public class CreateController implements Initializable, ControlledScreen {
 		myController.cc.sendPackets(gp);
 
 		// h�ndterer svar fra serveren
-		Task task = new Task<Void>(){
+		Task<Void> task = new Task<Void>(){
 
 			@Override
 			protected Void call() throws Exception {
 				Thread.sleep(500);
 				GamePacket gp = myController.cc.getCreateAccountPacket();
 				if(((AccountDTO)gp.getPayload()) instanceof AccountDTO){
+					myController.setScreen("login");
 				}else{
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Username exists");
-					alert.setHeaderText(null);
-					alert.setContentText("User already exists");
-					alert.showAndWait();
+					Platform.runLater(() ->	AlertBox.show("Error!","User already exists"));
 				}
-
 				return null;
 			}
 
@@ -88,32 +80,41 @@ public class CreateController implements Initializable, ControlledScreen {
 
 	@FXML
 	void userFieldHandler(KeyEvent event) {
-		if(!FieldVerifier.userNameVerifier(user.getText())){
-			isUser = false;
-			user.getStyleClass().add("error");
+		user.getStyleClass().remove("error");
+		user.getStyleClass().remove("normal");
+		if(FieldVerifier.userNameVerifier(user.getText())){
+			isUser = true;
+
+			user.getStyleClass().add("normal");
 			enableCreateButton();
 		}else{
-			isUser = true;
-			user.getStyleClass().add("normal");
+			isUser = false;
+			user.getStyleClass().add("error");
 			enableCreateButton();
 		}
 	}
 
 	@FXML
 	void emailFieldHandler(KeyEvent event) {
+		email.getStyleClass().remove("normal");
+		email.getStyleClass().remove("error");
 		if(!FieldVerifier.emailVerifier(email.getText())){
 			email.getStyleClass().add("error");
 			isEmail = false;
 			enableCreateButton();
 		}else{
 			isEmail = true;
+
 			email.getStyleClass().add("normal");
+
 			enableCreateButton();
 		}
 	}
 
 	@FXML
 	void passFieldHandler(KeyEvent event) {
+		pass.getStyleClass().remove("normal");
+		pass.getStyleClass().remove("error");
 		if(!FieldVerifier.passwordVerifier(pass.getText())){
 			pass.getStyleClass().add("error");
 			isPassword = false;
@@ -127,6 +128,8 @@ public class CreateController implements Initializable, ControlledScreen {
 
 	@FXML
 	void confirmFieldHandler(KeyEvent event) {
+		confPass.getStyleClass().remove("normal");
+		confPass.getStyleClass().remove("error");
 		if(!FieldVerifier.confirmedPasswordVerifier(pass.getText(), confPass.getText())){
 			confPass.getStyleClass().add("error");
 			isConfirmPassword = false;
@@ -136,6 +139,11 @@ public class CreateController implements Initializable, ControlledScreen {
 			confPass.getStyleClass().add("normal");
 			enableCreateButton();
 		}
+	}
+
+	@FXML
+	void backToMain(ActionEvent event) {
+		myController.setScreen("login");
 	}
 	private void enableCreateButton(){
 		if(isEmail && isPassword && isUser && isConfirmPassword){

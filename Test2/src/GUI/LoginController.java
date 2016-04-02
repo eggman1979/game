@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ResourceBundle;
-
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -18,7 +16,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import klient.ClientController;
-import klient.ClientStates;
 import shared.AccountDTO;
 import shared.GamePacket;
 
@@ -54,11 +51,15 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 	@FXML
 	private Label info;
 
-	// Action n�r login bliver klikket
+	// Action når login bliver klikket
+	// Henter brugerens indtastninger og sender til serveren
+	// Herefter kommer der en spinner der viser at der sker noget.
+	// En task bliver kørt -> henter en pakke ind, tjekker om den er
+	// er valid. hvis ja sender brugeren videre til main screen
+	// ellers kommer der en fejlmeddelse
 	@FXML
 	void login(ActionEvent event) throws IOException {
 		String login = user.getText()+"," +pass.getText();
-		myController.cc.setState(ClientStates.LOGIN);
 		myController.cc.sendPackets(new GamePacket("login", null, login));
 
 		progress.setVisible(true);
@@ -77,48 +78,29 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 				if(!(null == acc)){
 					myController.setScreen("main");
 					System.out.println("main");
-					System.out.println("login Controller if");
 				}else {
-					Platform.runLater(new Runnable() {
-
-						@Override
-						public void run() {
+					// Kalder et popup fejlmeddelelse
+					Platform.runLater(() -> {
 							AlertBox.show("Error", "Error in user name or password");
 							progress.setVisible(false);
-
-						}
+	
 					});
-					System.out.println("login Controller else");
-
-
-
 				}
-
 				return null;
 			}
-
-
-
-
 		};
 		new Thread(task).start();
-
-
 	}
-
-
-
+	
 	@FXML
 	void loadCreateAccount(ActionEvent event) {
 		myController.setScreen(GuiMain.CREATE_ACCOUNT_SCREEN);
-
 	}
-
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		createBtn.setDisable(true);
+		loginBtn.setDisable(true);
 		new Thread(new Runnable() {
 
 			@Override
@@ -130,6 +112,8 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 						Platform.runLater(() -> counter.setText("" + status));
 						if(isConnected){
 							Platform.runLater(() -> counter.setText("Connected"));
+							createBtn.setDisable(false);
+							loginBtn.setDisable(false);
 							break;
 						}
 						Thread.sleep(1000);
@@ -138,11 +122,8 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 
 					}
 				}
-
 			}
 		}).start();
-
-
 		new Thread(this).start();
 	}
 
@@ -150,8 +131,9 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 		myController = screenParent;
 	}
 
-
-
+	// Run metoden der under init sender en initpacket til serveren
+	// Sætter isConnected flaget til true, hvis der kommer noget tilbage,
+	// ellers kører den init igen.
 	@Override
 	public void run() {
 		myController.cc.sendPackets(new GamePacket("init",null,null));

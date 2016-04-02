@@ -4,8 +4,11 @@ public class FieldVerifier {
 
 	public static boolean userNameVerifier(String username){
 		if(username.length() > 6){ 
+			System.out.println("true");
 			return true;
 		}else{
+			System.out.println("false");
+
 			return false;
 		}
 	}
