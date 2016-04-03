@@ -60,11 +60,11 @@ public class InClientConnection{
 
 
 	private GamePacket processInputPacket(byte[] data) throws IOException, ClassNotFoundException, InterruptedException{
-
+        System.out.println("kommer jeg i processInput?");
 		ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
 		GamePacket packet = (GamePacket) iStream.readObject();
-		System.out.println(packet.getHeader() + " "+ packet.getToken()+ " " + packet.getPayload());
-
+		System.out.println("Pakkan er: " + packet.getHeader() + " "+ packet.getToken()+ " " + packet.getPayload());
+        
 		iStream.close();
 		return packet;
 	}

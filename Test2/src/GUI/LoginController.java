@@ -59,22 +59,26 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 	// ellers kommer der en fejlmeddelse
 	@FXML
 	void login(ActionEvent event) throws IOException {
-		String login = user.getText()+"," +pass.getText();
-		myController.cc.sendPackets(new GamePacket("login", null, login));
-
+		// Opretter AccountDTO og sender til serveren
+		AccountDTO userLogin = new AccountDTO(user.getText(), pass.getText());
+		myController.cc.sendPackets(new GamePacket("login", null, userLogin));
+		
+		//Viser at der sker noget i baggrunden
 		progress.setVisible(true);
 		progress.setProgress(-1f);
 
-
+		// Task der har til opgave at hente næste pakke fra InConnection
 		Task<Void> task = new Task<Void>(){
 
 			@Override
 			protected Void call() throws Exception {
+				// Starter med at vente, så man er sikker på at der er kommet noget.
 				Thread.sleep(1000);
 				GamePacket gp =	myController.cc.getLoginPacket();
 				AccountDTO acc = (AccountDTO)gp.getPayload();
 				System.out.println(acc);
-
+				
+				// Evaluerer om den sendte pakke er blevet godkendt af serveren
 				if(!(null == acc)){
 					myController.setScreen("main");
 					System.out.println("main");

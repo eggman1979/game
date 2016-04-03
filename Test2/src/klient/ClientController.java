@@ -70,7 +70,6 @@ public class ClientController implements Runnable
 
 	// Beslutter hvad der skal ske med de indkommende pakker
 	private void handlePackets(GamePacket inc) {
-
 		packets.add(inc);
 
 	}
@@ -85,22 +84,17 @@ public class ClientController implements Runnable
 		try{
 
 			loginPacket = in.recieve();
-
+			
 		}catch(NullPointerException e){
 			e.printStackTrace();
 		}
+		
 		return loginPacket;
-
-
-
-
-
 	}
 
 	public GamePacket getCreateAccountPacket() {
 		GamePacket createPacket = null;
 		try{
-
 			createPacket = in.recieve();
 
 		}catch(NullPointerException e){
@@ -110,9 +104,7 @@ public class ClientController implements Runnable
 	}
 
 	public GamePacket initServerConnection() {
-		System.out.println("Sidder i initServerConnection()");
 		GamePacket initPacket = in.recieve();
-		
 		return initPacket;
 	}
 
