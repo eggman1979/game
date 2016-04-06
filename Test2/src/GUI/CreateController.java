@@ -1,7 +1,3 @@
-
-
-
-
 package GUI;
 
 import java.net.URL;

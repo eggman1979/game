@@ -25,14 +25,17 @@ import GUI.LoginController;
 
 public class ScreenController extends StackPane {
 
+	public static final String MAIN_MENU = "main";
+	public static final String MAIN_MENU_FXML = "main.fxml";
+	
 	private HashMap<String, Node> screens = new HashMap<>(); 
 
 	FXMLLoader myLoader;
 	Parent loadScreen;
 	ClientController cc;
-	
+
 	public ScreenController() throws IOException{
-		 this.cc = new ClientController();
+		this.cc = new ClientController();
 	}
 
 	public void addScreen(String name, Node screen) {
@@ -42,7 +45,7 @@ public class ScreenController extends StackPane {
 	public boolean loadScreen(String name, String resource) {
 		try {
 
-			 myLoader = new FXMLLoader(getClass().getResource(resource));
+			myLoader = new FXMLLoader(getClass().getResource(resource));
 			loadScreen = (Parent) myLoader.load();
 			ControlledScreen myScreenControler =	((ControlledScreen) myLoader.getController());
 			myScreenControler.setScreenParent(this);
@@ -54,7 +57,7 @@ public class ScreenController extends StackPane {
 		}
 	} 
 	public boolean setScreen(final String name) {     
-			
+
 		if (screens.get(name) != null) {   //screen loaded
 			final DoubleProperty opacity = opacityProperty();
 			if (!getChildren().isEmpty()) {    //if there is more than one screen
@@ -65,7 +68,7 @@ public class ScreenController extends StackPane {
 							public void handle(ActionEvent t) {
 								getChildren().remove(0);                    //remove the displayed screen
 								getChildren().add(0, screens.get(name));     //add the screen
-								
+
 								Timeline fadeIn = new Timeline(
 										new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
 										new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
@@ -98,8 +101,11 @@ public class ScreenController extends StackPane {
 			return true;
 		}
 	} 
-	
-	
-	
-	
+
+public void loadMainScreen(){
+	loadScreen(MAIN_MENU, MAIN_MENU_FXML);
+	setScreen(MAIN_MENU);
+}
+
+
 }

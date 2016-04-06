@@ -80,8 +80,9 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 				
 				// Evaluerer om den sendte pakke er blevet godkendt af serveren
 				if(!(null == acc)){
-					myController.setScreen("main");
-					System.out.println("main");
+					myController.cc.setAccountDTO(acc);
+					myController.loadMainScreen();
+					
 				}else {
 					// Kalder et popup fejlmeddelelse
 					Platform.runLater(() -> {

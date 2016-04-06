@@ -1,7 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainmenuController" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainmenuController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="logOutBtn" alignment="CENTER" mnemonicParsing="false" onAction="#logOut" text="Log Out">
+               <HBox.margin>
+                  <Insets left="10.0" right="250.0" />
+               </HBox.margin>
+            </Button>
+            <Label text="User:">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="userLabel" text="0">
+               <HBox.margin>
+                  <Insets right="100.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Points:">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="pointsLabel" text="0" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="lobbyTable" prefHeight="173.0" prefWidth="459.0">
+              <columns>
+                <TableColumn fx:id="column1" prefWidth="248.0" text="Tables" />
+                <TableColumn fx:id="column2" prefWidth="145.0" text="players" />
+              </columns>
+            </TableView>
+            <VBox prefHeight="134.0" prefWidth="400.0">
+               <children>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <TextArea prefHeight="103.0" prefWidth="435.0" />
+                     </content>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ScrollPane>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField prefHeight="25.0" prefWidth="398.0">
+                           <HBox.margin>
+                              <Insets top="4.0" />
+                           </HBox.margin>
+                        </TextField>
+                       
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="8.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <VBox prefHeight="297.0" prefWidth="74.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="297.0" prefWidth="77.0" BorderPane.alignment="CENTER" />
+   </right>
+   
+</BorderPane>

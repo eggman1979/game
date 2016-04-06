@@ -1,4 +1,4 @@
-/shared/
-/ClientConnection/
-/klient/
 /GUI/
+/klient/
+/game/
+/server/

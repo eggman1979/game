@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 import ClientConnection.InClientConnection;
 import ClientConnection.OutConnectionClient;
-
+import game.Player;
+import game.Table;
+import shared.AccountDTO;
 import shared.GamePacket;
 import shared.Token;
 
@@ -15,22 +17,15 @@ public class ClientController implements Runnable
 {
 
 	private Token token;
-	private ClientStates states;
+	private AccountDTO acc;
+	private Player player;
 	private InClientConnection in;
 	private OutConnectionClient out;
-	private GamePacket gp;
-	private ArrayList<Runnable> observers = new ArrayList<>();
 	private ArrayList<GamePacket> packets = new ArrayList<>();
 
-
-
 	public ClientController() throws IOException{
-
 		in = new InClientConnection();
 		out = new OutConnectionClient();
-
-		//new Thread(this).start();
-
 	}
 
 	public void sendPackets(GamePacket gp){
@@ -41,7 +36,6 @@ public class ClientController implements Runnable
 				try {
 					out.sendPacket(gp);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -49,15 +43,8 @@ public class ClientController implements Runnable
 		}).start();
 
 	}
-	public void setState(ClientStates states){
-		this.states = states;
-	}
-	public ClientStates getState(){
-		return states;
-	}
 
-
-	// F�r besked fra In at der er en pakke der skal h�ndteres
+	// Får besked fra In at der er en pakke der skal håndteres
 	@Override
 	public void run() {
 		while(true){
@@ -66,7 +53,6 @@ public class ClientController implements Runnable
 
 		}
 	}
-
 
 	// Beslutter hvad der skal ske med de indkommende pakker
 	private void handlePackets(GamePacket inc) {
@@ -84,11 +70,12 @@ public class ClientController implements Runnable
 		try{
 
 			loginPacket = in.recieve();
-			
+
 		}catch(NullPointerException e){
+			System.out.println("Den indkommende pakke er NULL");
 			e.printStackTrace();
 		}
-		
+
 		return loginPacket;
 	}
 
@@ -108,5 +95,17 @@ public class ClientController implements Runnable
 		return initPacket;
 	}
 
+	public void setAccountDTO(AccountDTO acc){
+		this.acc = acc;
+	}
+	public AccountDTO getAccountDTO(){
+		return acc;
+	}
 
+	public GamePacket getTables() throws IOException {
+		GamePacket tablePacket = in.recieve();
+		return tablePacket;
+
+
+	}
 }

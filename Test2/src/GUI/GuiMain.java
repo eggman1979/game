@@ -11,12 +11,11 @@ public class GuiMain extends Application{
 
      public static final String LOGIN_SCREEN = "login";
      public static final String LOGIN_SCREEN_FXML = "login.fxml";
-     public static final String CREATE_ACCOUNT_SCREEN = "create";
+    
+     
+      public static final String CREATE_ACCOUNT_SCREEN = "create";
      public static final String CREATE_ACCOUNT_SCREEN_FXML = "create.fxml";
                                          
-     public static final String MAIN_MENU = "main";
-     public static final String MAIN_MENU_FXML = "main.fxml";
-     
      ScreenController mainContainer;
      @Override
      public void start(Stage primaryStage) throws IOException {
@@ -26,7 +25,7 @@ public class GuiMain extends Application{
                             GuiMain.LOGIN_SCREEN_FXML);
        mainContainer.loadScreen(GuiMain.CREATE_ACCOUNT_SCREEN,
                GuiMain.CREATE_ACCOUNT_SCREEN_FXML);
-       mainContainer.loadScreen(GuiMain.MAIN_MENU, MAIN_MENU_FXML);
+       
 
        mainContainer.setScreen(GuiMain.LOGIN_SCREEN);
 
