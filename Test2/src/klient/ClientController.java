@@ -99,7 +99,7 @@ public class ClientController implements Runnable
 		return acc;
 	}
 
-	public GamePacket getTables() throws IOException {
+	public GamePacket getTables() {
 		GamePacket tablePacket = in.recieve();
 		return tablePacket;
 

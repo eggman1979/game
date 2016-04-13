@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import game.Table;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -38,9 +39,9 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 
 	@FXML
 	private Button joinBtn;
-	
+
 	@FXML
-    private Button createTableBtn;
+	private Button createTableBtn;
 
 	@FXML
 	private Button logOutBtn;
@@ -50,14 +51,24 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 
 	@FXML
 	void logOut(ActionEvent event) {
-        myController.setScreen("login");
-        myController.cc.sendPackets(new GamePacket("logout", myController.cc.getToken(), null));
+		myController.setScreen("login");
+		myController.cc.sendPackets(new GamePacket("logout", myController.cc.getToken(), null));
 	}
 
 	@FXML
 	void joinTable(ActionEvent event) {
-           myController.loadTableScreen(table);
-          
+		GamePacket gp = new GamePacket("joinTable", myController.cc.getToken(), table);
+		myController.cc.sendPackets(gp);
+		Task<Void> task = new Task<Void>() {
+
+			@Override
+			protected Void call() throws Exception {
+				myController.cc.getTables();
+				return null;
+			}
+		};
+		myController.loadTableScreen(table);
+
 	}
 
 
@@ -69,64 +80,77 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 		}
 		event.consume();
 	}
-	
-	  @FXML
-	    void createTable(ActionEvent event) {
-             CreateTableBox gtb = new CreateTableBox(myController);
-             gtb.show();
-            
-             new Thread(this).start();
-	    }
-/*
- * Below is various non FXML RELATED METHODS
- * 
- */
+
+	@FXML
+	void createTable(ActionEvent event) {
+		CreateTableBox gtb = new CreateTableBox(myController);
+		gtb.show();
+		Task<Void> task = new Task<Void>(){
+        
+			@Override
+			protected Void call() throws Exception {
+				while(gtb.isOn()){
+					// Løkke der kører indtil vinduet er lukket
+					Thread.sleep(100);
+					System.out.println(gtb.isOn());
+					
+				}
+
+				initialize(null, null);
+				return null;
+			}
+		};
+		new Thread(task).start();
+
+
+
+
+
+	}
+	/*
+	 * Below is various non FXML RELATED METHODS
+	 * 
+	 */
 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		new Thread(this).start();
 	}
-	
+
 	@Override
 	public void run() {
 		myController.cc.sendPackets(new GamePacket("getTables", null,null));
 		System.out.println("sender jeg?");
-		try {
-			GamePacket getTables = myController.cc.getTables();
-			if(getTables.getPayload() instanceof ArrayList<?>){
-				@SuppressWarnings("unchecked")
-				ArrayList<Table> tempTable = (ArrayList<Table>) getTables.getPayload();
-				tables = FXCollections.observableArrayList(tempTable);
-				lobbyTable.setItems(tables);
 
-				lobbyTable.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>(){
+		GamePacket getTables = myController.cc.getTables();
+		if(getTables.getPayload() instanceof ArrayList<?>){
+			@SuppressWarnings("unchecked")
+			ArrayList<Table> tempTable = (ArrayList<Table>) getTables.getPayload();
+			tables = FXCollections.observableArrayList(tempTable);
+			Platform.runLater(() -> lobbyTable.setItems(tables));
 
-					@Override
-					public ListCell<Table> call(ListView<Table> p) {
+			lobbyTable.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>(){
 
-						ListCell<Table> cell = new ListCell<Table>(){
+				@Override
+				public ListCell<Table> call(ListView<Table> p) {
 
-							@Override
-							protected void updateItem(Table t, boolean bln) {
-								super.updateItem(t, bln);
-								if (t != null) {
-									setText(t.getTableName() + ": " + t.getNoOfPlayers());
-								
-								}
+					ListCell<Table> cell = new ListCell<Table>(){
+
+						@Override
+						protected void updateItem(Table t, boolean bln) {
+							super.updateItem(t, bln);
+							if (t != null) {
+								setText(t.getTableName() + ": " + t.getNoOfPlayers());
+
 							}
+						}
 
-						};
-
-						return cell;
-					}
-				});
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					};
+					return cell;
+				}
+			});
 		}
-
 
 	}
 
@@ -140,7 +164,4 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 		// TODO Auto-generated method stub
 
 	}
-	
-	
-
 }

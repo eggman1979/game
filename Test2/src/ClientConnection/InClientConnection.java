@@ -26,8 +26,6 @@ public class InClientConnection{
 	}
 
 
-
-
 	public GamePacket recieve(){	
 		buffer = new byte[2048];
 		inPacket = new DatagramPacket(buffer, buffer.length);
@@ -50,8 +48,6 @@ public class InClientConnection{
 	}
 
 
-
-
 	private GamePacket processInputPacket(byte[] data) throws IOException, ClassNotFoundException, InterruptedException{
 		System.out.println("kommer jeg i processInput?");
 		ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
@@ -61,12 +57,6 @@ public class InClientConnection{
 		iStream.close();
 		return packet;
 	}
-
-
-
-
-
-
 
 
 }

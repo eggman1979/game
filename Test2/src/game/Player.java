@@ -7,9 +7,11 @@ public class Player implements Serializable{
 	private static final long serialVersionUID = -6032509606613961674L;
 	int score;
 	int userID;
-	public Player(int userID, int score){
+	String userName;
+	public Player(int userID, int score, String userName){
 		this.score = score;
 		this.userID = userID;
+		this.userName = userName;
 	}
 
 
