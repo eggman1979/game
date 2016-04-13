@@ -153,4 +153,13 @@ public class CreateController implements Initializable, ControlledScreen {
 		createBtn.setDisable(true);
 
 	}
+
+
+
+
+	@Override
+	public void init(Object data) {
+		// TODO Auto-generated method stub
+		
+	}
 }

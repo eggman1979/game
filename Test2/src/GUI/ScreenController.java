@@ -22,11 +22,15 @@ import javafx.util.Duration;
 import klient.ClientController;
 import shared.GamePacket;
 import GUI.LoginController;
+import game.Table;
 
 public class ScreenController extends StackPane {
 
 	public static final String MAIN_MENU = "main";
 	public static final String MAIN_MENU_FXML = "main.fxml";
+	
+	public static final String TABLE = "table";
+	public static final String TABLE_FXML = "table.fxml";
 	
 	private HashMap<String, Node> screens = new HashMap<>(); 
 
@@ -42,13 +46,16 @@ public class ScreenController extends StackPane {
 		screens.put(name, screen);
 	} 
 
-	public boolean loadScreen(String name, String resource) {
+	public boolean loadScreen(String name, String resource, Object data) {
 		try {
 
 			myLoader = new FXMLLoader(getClass().getResource(resource));
 			loadScreen = (Parent) myLoader.load();
 			ControlledScreen myScreenControler =	((ControlledScreen) myLoader.getController());
 			myScreenControler.setScreenParent(this);
+			if(null != data){
+				 myScreenControler.init(data);
+			}
 			addScreen(name, loadScreen);
 			return true;
 		}catch(Exception e) {
@@ -93,18 +100,17 @@ public class ScreenController extends StackPane {
 			return false;
 		}
 	} 
-	public boolean unloadScreen(String name) {
-		if(screens.remove(name) == null) {
-			System.out.println("Screen didn't exist");
-			return false;
-		} else {
-			return true;
-		}
-	} 
+	
+	
 
 public void loadMainScreen(){
-	loadScreen(MAIN_MENU, MAIN_MENU_FXML);
+	loadScreen(MAIN_MENU, MAIN_MENU_FXML, null );
 	setScreen(MAIN_MENU);
+}
+
+public void loadTableScreen(Table table){
+	loadScreen(TABLE, TABLE_FXML, table);
+	setScreen(TABLE);
 }
 
 

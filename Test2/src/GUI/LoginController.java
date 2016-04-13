@@ -82,6 +82,9 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 				if(!(null == acc)){
 					myController.cc.setAccountDTO(acc);
 					myController.loadMainScreen();
+					progress.setVisible(false);
+					user.setText("");
+					pass.setText("");
 					
 				}else {
 					// Kalder et popup fejlmeddelelse
@@ -150,6 +153,12 @@ public class LoginController implements Runnable, Initializable, ControlledScree
 			initialize(null, null);
 		}
 
+	}
+
+	@Override
+	public void init(Object data) {
+		// TODO Auto-generated method stub
+		
 	} 
 
 }

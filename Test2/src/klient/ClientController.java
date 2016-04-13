@@ -1,6 +1,7 @@
 package klient;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.util.ArrayList;
 
 
@@ -22,10 +23,11 @@ public class ClientController implements Runnable
 	private InClientConnection in;
 	private OutConnectionClient out;
 	private ArrayList<GamePacket> packets = new ArrayList<>();
+	DatagramSocket socket = new DatagramSocket(10000);
 
 	public ClientController() throws IOException{
-		in = new InClientConnection();
-		out = new OutConnectionClient();
+		in = new InClientConnection(socket);
+		out = new OutConnectionClient(socket);
 	}
 
 	public void sendPackets(GamePacket gp){

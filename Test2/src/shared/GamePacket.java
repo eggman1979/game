@@ -9,8 +9,8 @@ import java.net.InetAddress;
 /**
  * @author KimDrewes
  * Ideen med denne klasse er at have et format til at kunne sende objekter frem og tilbage
- * Der skal være en header, der gør at de hurtigt kan sorteres imellem.
- * Udover headeren skal der være et Objekt der kan pakkes ud og hente data.
+ * Der skal vï¿½re en header, der gï¿½r at de hurtigt kan sorteres imellem.
+ * Udover headeren skal der vï¿½re et Objekt der kan pakkes ud og hente data.
  */
 public class GamePacket implements Serializable{
 	
@@ -26,6 +26,7 @@ public class GamePacket implements Serializable{
 	private Token token;
 	private String header; // Headeren der identificerer pakken
 	private InetAddress inetAddress; // Hvem der har send pakken.
+	private int port;
 	private Object payload;
 	
 	public GamePacket(String header, Token token, Object payload){
@@ -43,6 +44,10 @@ public class GamePacket implements Serializable{
 	public InetAddress getInetAddress() {
 		return inetAddress;
 	}
+	
+	public void setInetAddress(InetAddress inet){
+		this.inetAddress = inet;
+	}
 
 	public Object getPayload() {
 		return payload;
@@ -51,6 +56,10 @@ public class GamePacket implements Serializable{
 	public Token getToken() {
 		return token;
 	}
-	
-	
+	public void setPort(int port){
+		this.port = port;
+	}
+	public int getPort(){
+	 return port;
+	}
 }

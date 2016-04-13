@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
@@ -22,15 +23,10 @@ public class InClientConnection{
 	byte buffer[];
 
 
-	public InClientConnection() throws IOException{
-		in = new DatagramSocket(9999);
-		iNet = InetAddress.getByName("127.0.0.1");
-
-
+	public InClientConnection(DatagramSocket socket) throws IOException{
+		//in = new DatagramSocket();
+		this.in = socket;
 	}
-
-
-
 
 
 
@@ -60,11 +56,11 @@ public class InClientConnection{
 
 
 	private GamePacket processInputPacket(byte[] data) throws IOException, ClassNotFoundException, InterruptedException{
-        System.out.println("kommer jeg i processInput?");
+		System.out.println("kommer jeg i processInput?");
 		ObjectInputStream iStream = new ObjectInputStream(new ByteArrayInputStream(data));
 		GamePacket packet = (GamePacket) iStream.readObject();
 		System.out.println("Pakkan er: " + packet.getHeader() + " "+ packet.getToken()+ " " + packet.getPayload());
-        
+
 		iStream.close();
 		return packet;
 	}
