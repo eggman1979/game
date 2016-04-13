@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AlertBox {
+	
 private static VBox box;
 private static Label label;
 private static Button closeBtn;

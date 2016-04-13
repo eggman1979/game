@@ -2,17 +2,13 @@ package GUI;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.concurrent.RunnableFuture;
+
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,18 +16,16 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import klient.ClientController;
-import shared.GamePacket;
-import GUI.LoginController;
 import game.Table;
 
 public class ScreenController extends StackPane {
 
 	public static final String MAIN_MENU = "main";
 	public static final String MAIN_MENU_FXML = "main.fxml";
-	
+
 	public static final String TABLE = "table";
 	public static final String TABLE_FXML = "table.fxml";
-	
+
 	private HashMap<String, Node> screens = new HashMap<>(); 
 
 	FXMLLoader myLoader;
@@ -53,9 +47,9 @@ public class ScreenController extends StackPane {
 			loadScreen = (Parent) myLoader.load();
 			ControlledScreen myScreenControler =	((ControlledScreen) myLoader.getController());
 			myScreenControler.setScreenParent(this);
-			if(null != data){
-				 myScreenControler.init(data);
-			}
+
+			myScreenControler.init(data);
+
 			addScreen(name, loadScreen);
 			return true;
 		}catch(Exception e) {
@@ -100,18 +94,18 @@ public class ScreenController extends StackPane {
 			return false;
 		}
 	} 
-	
-	
 
-public void loadMainScreen(){
-	loadScreen(MAIN_MENU, MAIN_MENU_FXML, null );
-	setScreen(MAIN_MENU);
-}
 
-public void loadTableScreen(Table table){
-	loadScreen(TABLE, TABLE_FXML, table);
-	setScreen(TABLE);
-}
+
+	public void loadMainScreen(){
+		loadScreen(MAIN_MENU, MAIN_MENU_FXML, null );
+		setScreen(MAIN_MENU);
+	}
+
+	public void loadTableScreen(Table table){
+		loadScreen(TABLE, TABLE_FXML, table);
+		setScreen(TABLE);
+	}
 
 
 }

@@ -44,7 +44,16 @@
                         <Insets bottom="8.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="joinBtn" mnemonicParsing="false" onAction="#joinTable" text="Join Table" />
+                  <HBox prefHeight="28.0" prefWidth="449.0">
+                     <children>
+                        <Button fx:id="joinBtn" mnemonicParsing="false" onAction="#joinTable" text="Join Table">
+                           <HBox.margin>
+                              <Insets right="297.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="createTableBtn" mnemonicParsing="false" onAction="#createTable" text="Create Table" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

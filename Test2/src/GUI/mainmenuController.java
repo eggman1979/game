@@ -4,25 +4,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import game.Table;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-
 import javafx.collections.ObservableList;
-
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-
 import javafx.scene.control.TableColumn;
-
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
@@ -45,6 +38,9 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 
 	@FXML
 	private Button joinBtn;
+	
+	@FXML
+    private Button createTableBtn;
 
 	@FXML
 	private Button logOutBtn;
@@ -67,12 +63,24 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 
 	@FXML
 	void tableClick(MouseEvent event) {
-		if(event.getButton() == MouseButton.SECONDARY){
-			
+		if(event.getButton() == MouseButton.PRIMARY){
 			table = lobbyTable.getSelectionModel().getSelectedItem();
+			System.out.println(table);
 		}
 		event.consume();
 	}
+	
+	  @FXML
+	    void createTable(ActionEvent event) {
+             CreateTableBox gtb = new CreateTableBox(myController);
+             gtb.show();
+            
+             new Thread(this).start();
+	    }
+/*
+ * Below is various non FXML RELATED METHODS
+ * 
+ */
 
 
 	@Override
@@ -87,6 +95,7 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 		try {
 			GamePacket getTables = myController.cc.getTables();
 			if(getTables.getPayload() instanceof ArrayList<?>){
+				@SuppressWarnings("unchecked")
 				ArrayList<Table> tempTable = (ArrayList<Table>) getTables.getPayload();
 				tables = FXCollections.observableArrayList(tempTable);
 				lobbyTable.setItems(tables);
@@ -131,5 +140,7 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 
 }

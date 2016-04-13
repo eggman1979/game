@@ -7,9 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
+
 
 import shared.GamePacket;
 
@@ -24,7 +22,6 @@ public class InClientConnection{
 
 
 	public InClientConnection(DatagramSocket socket) throws IOException{
-		//in = new DatagramSocket();
 		this.in = socket;
 	}
 

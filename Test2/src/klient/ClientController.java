@@ -3,13 +3,9 @@ package klient;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
-
-
-
 import ClientConnection.InClientConnection;
 import ClientConnection.OutConnectionClient;
-import game.Player;
-import game.Table;
+
 import shared.AccountDTO;
 import shared.GamePacket;
 import shared.Token;
@@ -19,11 +15,10 @@ public class ClientController implements Runnable
 
 	private Token token;
 	private AccountDTO acc;
-	private Player player;
 	private InClientConnection in;
 	private OutConnectionClient out;
 	private ArrayList<GamePacket> packets = new ArrayList<>();
-	DatagramSocket socket = new DatagramSocket(10000);
+	DatagramSocket socket = new DatagramSocket();
 
 	public ClientController() throws IOException{
 		in = new InClientConnection(socket);
