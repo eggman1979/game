@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import game.Table;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +21,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import shared.GamePacket;
+import shared.game.Table;
 
 public class mainmenuController implements ControlledScreen, Runnable, Initializable {
 
@@ -83,28 +84,35 @@ public class mainmenuController implements ControlledScreen, Runnable, Initializ
 
 	@FXML
 	void createTable(ActionEvent event) {
+
 		CreateTableBox gtb = new CreateTableBox(myController);
 		gtb.show();
 		Task<Void> task = new Task<Void>(){
-        
+
 			@Override
 			protected Void call() throws Exception {
 				while(gtb.isOn()){
 					// Løkke der kører indtil vinduet er lukket
 					Thread.sleep(100);
-					System.out.println(gtb.isOn());
-					
+
+				}
+				GamePacket gp =  (GamePacket) myController.cc.getTables();
+				Thread.sleep(1000);
+
+				if(gp.getPayload() instanceof Table){
+					System.out.println("får en table tilbage");
+					table = (Table)gp.getPayload();
+
+
+					 myController.loadTableScreen(table);
 				}
 
-				initialize(null, null);
 				return null;
 			}
+
 		};
 		new Thread(task).start();
-
-
-
-
+		
 
 	}
 	/*

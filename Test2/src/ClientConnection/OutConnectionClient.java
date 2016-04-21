@@ -22,7 +22,8 @@ public class OutConnectionClient{
 
 
 	public OutConnectionClient(DatagramSocket out) throws UnknownHostException, SocketException{
-		INET = InetAddress.getByName("ubuntu4.javabog.dk");
+//		INET = InetAddress.getByName("ubuntu4.javabog.dk");
+		INET = InetAddress.getByName("127.0.0.1");
 		this.out = out;
 
 

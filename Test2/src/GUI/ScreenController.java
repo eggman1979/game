@@ -16,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import klient.ClientController;
-import game.Table;
+import shared.game.Table;
 
 public class ScreenController extends StackPane {
 
@@ -31,6 +31,7 @@ public class ScreenController extends StackPane {
 	FXMLLoader myLoader;
 	Parent loadScreen;
 	ClientController cc;
+	Table table;
 
 	public ScreenController() throws IOException{
 		this.cc = new ClientController();
@@ -40,15 +41,16 @@ public class ScreenController extends StackPane {
 		screens.put(name, screen);
 	} 
 
-	public boolean loadScreen(String name, String resource, Object data) {
+	public boolean loadScreen(String name, String resource) {
 		try {
 
 			myLoader = new FXMLLoader(getClass().getResource(resource));
 			loadScreen = (Parent) myLoader.load();
 			ControlledScreen myScreenControler =	((ControlledScreen) myLoader.getController());
 			myScreenControler.setScreenParent(this);
+			myScreenControler.init(table);
 
-			myScreenControler.init(data);
+
 
 			addScreen(name, loadScreen);
 			return true;
@@ -98,12 +100,13 @@ public class ScreenController extends StackPane {
 
 
 	public void loadMainScreen(){
-		loadScreen(MAIN_MENU, MAIN_MENU_FXML, null );
+		loadScreen(MAIN_MENU, MAIN_MENU_FXML );
 		setScreen(MAIN_MENU);
 	}
 
 	public void loadTableScreen(Table table){
-		loadScreen(TABLE, TABLE_FXML, table);
+		this.table = table;
+		loadScreen(TABLE, TABLE_FXML);
 		setScreen(TABLE);
 	}
 

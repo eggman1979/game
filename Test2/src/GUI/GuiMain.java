@@ -25,9 +25,9 @@ public class GuiMain extends Application{
      public void start(Stage primaryStage) throws IOException {
 
        mainContainer = new ScreenController();
-       mainContainer.loadScreen(GuiMain.LOGIN_SCREEN, GuiMain.LOGIN_SCREEN_FXML,null);
+       mainContainer.loadScreen(GuiMain.LOGIN_SCREEN, GuiMain.LOGIN_SCREEN_FXML);
 //       mainContainer.loadScreen(GuiMain.MAIN,  GuiMain.MAIN_FXML,null);
-       mainContainer.loadScreen(GuiMain.CREATE_ACCOUNT_SCREEN,GuiMain.CREATE_ACCOUNT_SCREEN_FXML,null);
+       mainContainer.loadScreen(GuiMain.CREATE_ACCOUNT_SCREEN,GuiMain.CREATE_ACCOUNT_SCREEN_FXML);
                
        
 

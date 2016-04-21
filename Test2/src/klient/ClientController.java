@@ -67,6 +67,9 @@ public class ClientController implements Runnable
 		try{
 
 			loginPacket = in.recieve();
+			if(null != loginPacket.getToken()){
+				token = loginPacket.getToken();
+			}
 
 		}catch(NullPointerException e){
 			System.out.println("Den indkommende pakke er NULL");
@@ -102,7 +105,10 @@ public class ClientController implements Runnable
 	public GamePacket getTables() {
 		GamePacket tablePacket = in.recieve();
 		return tablePacket;
+	}
 
-
+	public GamePacket getChatPacket() {
+		GamePacket tablePacket = in.recieve();
+		return tablePacket;
 	}
 }
